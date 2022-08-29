@@ -7,3 +7,7 @@ env/
 __pycache__/
 *.log
 *.pyc
+
+# json files
+tweets.json
+users.json
