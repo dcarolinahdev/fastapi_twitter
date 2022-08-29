@@ -55,6 +55,7 @@ class Tweet(BaseModel):
 
 ## Users
 
+### Register a user
 @app.post(
     path="/signup",
     status_code=status.HTTP_201_CREATED,
@@ -65,6 +66,7 @@ class Tweet(BaseModel):
 def signup():
     pass
 
+### Login a user
 @app.post(
     path="/login",
     status_code=status.HTTP_200_OK,
@@ -75,6 +77,7 @@ def signup():
 def login():
     pass
 
+### Show all users
 @app.get(
     path="/users",
     status_code=status.HTTP_200_OK,
@@ -85,6 +88,7 @@ def login():
 def show_all_users():
     pass
 
+### Show a user
 @app.get(
     path="/users/{user_id}",
     status_code=status.HTTP_200_OK,
@@ -95,6 +99,7 @@ def show_all_users():
 def show_a_user():
     pass
 
+### Delete a user
 @app.delete(
     path="/users/{user_id}/delete",
     status_code=status.HTTP_200_OK,
@@ -105,6 +110,7 @@ def show_a_user():
 def delete_a_user():
     pass
 
+### Update a user
 @app.put(
     path="/users/{user_id}/update",
     status_code=status.HTTP_200_OK,
@@ -117,6 +123,7 @@ def update_a_user():
 
 ## Tweets
 
+### Show all tweets
 @app.get(
     path="/",
     status_code=status.HTTP_200_OK,
