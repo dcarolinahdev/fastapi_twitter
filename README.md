@@ -5,6 +5,8 @@
 ```
 fastapi==0.81.0
 uvicorn==0.18.3
+
+"pydantic[email]" -> email-validator==1.2.1
 ```
 You can see complete requirements in [requirements.txt](requirements.txt)
 
