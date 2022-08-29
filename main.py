@@ -133,3 +133,47 @@ def update_a_user():
 )
 def home():
     return {"Twitter API": "Working!"}
+
+### Post a tweet
+@app.post(
+    path="/post",
+    status_code=status.HTTP_201_CREATED,
+    response_model=Tweet,
+    summary="Post a tweet",
+    tags=['Tweets']
+)
+def post():
+    pass
+
+### Show a tweet
+@app.get(
+    path="/tweets/{tweet_id}",
+    status_code=status.HTTP_200_OK,
+    response_model=Tweet,
+    summary="Show a tweet",
+    tags=['Tweets']
+)
+def show_a_tweet():
+    pass
+
+### Delete a tweet
+@app.delete(
+    path="/tweets/{tweet_id}/delete",
+    status_code=status.HTTP_200_OK,
+    response_model=Tweet,
+    summary="Delete a tweet",
+    tags=['Tweets']
+)
+def delete_a_tweet():
+    pass
+
+### Update a tweet
+@app.put(
+    path="/tweets/{tweet_id}/update",
+    status_code=status.HTTP_200_OK,
+    response_model=Tweet,
+    summary="Update a tweet",
+    tags=['Tweets']
+)
+def update_a_tweet():
+    pass
