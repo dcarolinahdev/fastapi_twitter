@@ -52,13 +52,6 @@ class Tweet(BaseModel):
     by: User = Field(...)
 
 # Path Operations
-@app.get(
-    path="/",
-    status_code=status.HTTP_200_OK,
-    tags=['Index']
-)
-def home():
-    return {"Twitter API": "Working!"}
 
 ## Users
 
@@ -123,3 +116,13 @@ def update_a_user():
     pass
 
 ## Tweets
+
+@app.get(
+    path="/",
+    status_code=status.HTTP_200_OK,
+    response_model=List[Tweet],
+    summary="Show all tweets",
+    tags=['Tweets']
+)
+def home():
+    return {"Twitter API": "Working!"}
