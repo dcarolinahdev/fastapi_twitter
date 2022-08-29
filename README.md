@@ -26,8 +26,8 @@ You can see complete requirements in [requirements.txt](requirements.txt)
 
 | route | meaning |
 | --- | --- |
-| /signup | register an user |
-| /login | login an user |
+| /signup | register a user |
+| /login | login a user |
 | /users | show all users |
 | /users/{user_id} | show a specific user |
 | /users/{user_id}/delete | delete a specific user |
