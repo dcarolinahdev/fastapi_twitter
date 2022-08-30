@@ -418,5 +418,45 @@ def delete_a_tweet(
     summary="Update a tweet",
     tags=['Tweets']
 )
-def update_a_tweet():
-    pass
+def update_a_tweet(
+    tweet_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="Tweet identification",
+        description="This is the tweet_id in db"
+        ),
+    tweet_updated: Tweet = Body(...),
+):
+    """
+    **Update a tweet**
+
+    This path operation update a specific tweet in the app.
+
+    Parameters:
+    - **tweet_id: str**: Tweet identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    with open("tweets.json", "r+", encoding="UTF-8") as f:
+        tweets = json.loads(f.read())
+        founded = None
+        for tweet in tweets:
+            if tweet.get("tweet_id") == tweet_id:
+                founded = tweet
+                break
+        f.close
+
+        tweet = tweet_updated.dict()
+        tweet["tweet_id"] = str(tweet["tweet_id"])
+        tweet["created_at"] = str(tweet["created_at"])
+        tweet["updated_at"] = str(tweet["updated_at"])
+        tweet["by"]["user_id"] = str(tweet["by"]["user_id"])
+        tweet["by"]["birth_date"] = str(tweet["by"]["birth_date"])
+        tweets[tweets.index(founded)] = tweet
+
+        with open("tweets.json", "w", encoding="UTF-8") as f:
+            f.seek(0)
+            f.write(json.dumps(tweets))
+
+        return tweet
