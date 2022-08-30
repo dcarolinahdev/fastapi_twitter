@@ -6,7 +6,8 @@ from typing import Optional, List
 # Pydantic
 from pydantic import BaseModel, EmailStr, Field
 # FastAPI
-from fastapi import FastAPI, status, Body
+from fastapi import FastAPI, status, HTTPException
+from fastapi import Body, Path
 
 app = FastAPI()
 
@@ -139,8 +140,37 @@ def show_all_users():
     summary="Show a user",
     tags=['Users']
 )
-def show_a_user():
-    pass
+def show_a_user(
+    user_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="User identification",
+        description="This is the user_id in db"
+        )
+):
+    """
+    **Show a user if exists in the app**
+
+    This path operation show a specific user in the app.
+
+    Parameters:
+    - **user_id: str**: User identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    with open("users.json", "r", encoding="UTF-8") as f:
+        users = json.loads(f.read())
+        for user in users:
+            if user.get("user_id") == user_id:
+                found = user
+                break
+        return found
+    """if user_id not in users:
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="This user doesn't exist!"
+    )"""
 
 ### Delete a user
 @app.delete(
