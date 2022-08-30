@@ -191,8 +191,50 @@ def delete_a_user():
     summary="Update a user",
     tags=['Users']
 )
-def update_a_user():
-    pass
+def update_a_user(
+    user_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="User identification",
+        description="This is the user_id in db"
+        ),
+    user_updated: User = Body(...),
+):
+    """
+    **Update a user**
+
+    This path operation update a specific user in the app.
+
+    Parameters:
+    - **user_id: str**: User identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    with open("users.json", "r+", encoding="UTF-8") as f:
+        users = json.loads(f.read())
+        founded = None
+        for user in users:
+            if user.get("user_id") == user_id:
+                founded = user
+                break
+        f.close
+
+        user = user_updated.dict()
+        user["user_id"] = str(user["user_id"])
+        user["birth_date"] = str(user["birth_date"])
+        users[users.index(founded)] = user
+
+        with open("users.json", "w", encoding="UTF-8") as f:
+            f.seek(0)
+            f.write(json.dumps(users))
+
+        return user
+    """if user_id not in users:
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="This user doesn't exist!"
+    )"""
 
 ## Tweets
 
