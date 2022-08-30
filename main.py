@@ -176,12 +176,44 @@ def show_a_user(
 @app.delete(
     path="/users/{user_id}/delete",
     status_code=status.HTTP_200_OK,
-    response_model=User,
+    # response_model=User,
     summary="Delete a user",
     tags=['Users']
 )
-def delete_a_user():
-    pass
+def delete_a_user(
+    user_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="User identification",
+        description="This is the user_id in db"
+        )
+):
+    """
+    **Delete a user**
+
+    This path operation delete a specific user in the app.
+
+    Parameters:
+    - **user_id: str**: User identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    deleted = False
+    with open("users.json", "r+", encoding="UTF-8") as f:
+        users = json.loads(f.read())
+        for user in users:
+            if user.get("user_id") == user_id:
+                users.pop(users.index(user))
+                deleted = True
+                break
+        f.close
+
+        with open("users.json", "w", encoding="UTF-8") as f:
+            f.seek(0)
+            f.write(json.dumps(users))
+
+    return {"Deleted": str(deleted)}
 
 ### Update a user
 @app.put(
