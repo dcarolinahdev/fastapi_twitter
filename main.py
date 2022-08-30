@@ -371,12 +371,44 @@ def show_a_tweet(
 @app.delete(
     path="/tweets/{tweet_id}/delete",
     status_code=status.HTTP_200_OK,
-    response_model=Tweet,
+    # response_model=Tweet,
     summary="Delete a tweet",
     tags=['Tweets']
 )
-def delete_a_tweet():
-    pass
+def delete_a_tweet(
+    tweet_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="Tweet identification",
+        description="This is the tweet_id in db"
+        )
+):
+    """
+    **Delete a tweet**
+
+    This path operation delete a specific tweet in the app.
+
+    Parameters:
+    - **tweet_id: str**: Tweet identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    deleted = False
+    with open("tweets.json", "r+", encoding="UTF-8") as f:
+        tweets = json.loads(f.read())
+        for tweet in tweets:
+            if tweet.get("tweet_id") == tweet_id:
+                tweets.pop(tweets.index(tweet))
+                deleted = True
+                break
+        f.close
+
+        with open("tweets.json", "w", encoding="UTF-8") as f:
+            f.seek(0)
+            f.write(json.dumps(tweets))
+
+    return {"Deleted": str(deleted)}
 
 ### Update a tweet
 @app.put(
