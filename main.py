@@ -340,8 +340,32 @@ def post(tweet: Tweet = Body(...)):
     summary="Show a tweet",
     tags=['Tweets']
 )
-def show_a_tweet():
-    pass
+def show_a_tweet(
+    tweet_id: str = Path(
+        ...,
+        example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        title="Tweet identification",
+        description="This is the tweet_id in db"
+        )
+):
+    """
+    **Show a tweet if exists in the app**
+
+    This path operation show a specific tweet in the app.
+
+    Parameters:
+    - **tweet_id: str**: Tweet identification in database.
+
+    Returns:
+    - A python dict with identification in database as key and message as value.
+    """
+    with open("tweets.json", "r", encoding="UTF-8") as f:
+        tweets = json.loads(f.read())
+        for tweet in tweets:
+            if tweet.get("tweet_id") == tweet_id:
+                found = tweet
+                break
+        return found
 
 ### Delete a tweet
 @app.delete(
