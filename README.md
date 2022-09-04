@@ -1,5 +1,23 @@
 # Twitter API in FastAPI
 
+---
+
+> ***v1.2*** - This is an initial project in a learning path, it isn't finished yet and it currently includes topics such as:
+
+*Some features*
+
+- The models, views and forms of this project are in the same file.
+
+- The project don't use a user interface other than documentation views, such as swagger or redoc.
+
+- It uses base authentication.
+
+- The project does not use any database.
+
+- Validations: Query and Path Parameters.
+
+- Preloaded examples for swagger and redoc documentation.
+
 ## Versions
 
 ```
@@ -8,6 +26,7 @@ uvicorn==0.18.3
 
 "pydantic[email]" -> email-validator==1.2.1
 ```
+
 You can see complete requirements in [requirements.txt](requirements.txt)
 
 ## END-POINTS
